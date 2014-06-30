@@ -1,0 +1,7 @@
+Package: consul
+Version: ((VERSION))
+Section: base
+Priority: optional
+Architecture: amd64
+Maintainer: HashiCorp <HashiCorp@HashiCorp.com>
+Description: Consul service discovery tool

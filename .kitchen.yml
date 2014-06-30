@@ -1,0 +1,81 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_solo
+
+platforms:
+  - name: ubuntu-12.04
+
+suites:
+  - name: default_client
+    run_list: 
+      - recipe[bloom_consul]
+  - name: default_server
+    run_list: 
+      - recipe[bloom_consul]
+    attributes:
+        bloom_consul:
+            config:
+                bootstrap: true
+                server: true
+  - name: consul_install
+    run_list: 
+      - recipe[bloom_consul::install]
+  - name: configure
+    run_list: 
+      - recipe[bloom_consul::install]
+      - recipe[bloom_consul::configure]
+    attributes:
+        bloom_consul:
+            config: 
+                node_name: Kitchen Node
+                bootstrap: true
+                server: true
+                bind_addr: 10.2.3.4
+                advertise_addr: 10.2.3.5
+                client_addr: 10.2.3.6
+                data_dir: /tmp/consul/data
+                ui_dir: /tmp/web/data
+                log_level: trace
+                encrypt: "m3FC302X/C/xZw92+p+oIg=="
+                leave_on_terminate: true
+                skip_leave_on_interrupt: true
+                rejoin_after_leave: true
+                enable_syslog: true
+                syslog_facility: LOCAL1
+                enable_debug: true
+                datacenter: dc1
+                domain: consul.tld
+                dns_config: 
+                  service_ttl: 10s
+                  allow_stale: true
+                  max_stale: 5s
+                  node_ttl: 10m
+                ca_file: /tmp/ca
+                cert_file: /tmp/cert
+                key_file: /tmp/key
+                verify_incoming: true
+                verify_outgoing: true
+                ports: 
+                  dns: 53
+                  http: 80
+                  serf_lan: 8601
+                  serf_wan: 8602
+                  server: 8603 
+                  rpc: 8604
+                
+  - name: create_user_and_group
+    run_list:
+      - recipe[bloom_consul::create_user_and_group]
+  - name: deb_build
+    run_list: 
+      - recipe[bloom_consul_tests::deb_build]
+  - name: test_service
+    run_list: 
+      - recipe[bloom_consul]
+      - recipe[bloom_consul_tests::test_service]
+  - name: install_checks
+    run_list: 
+      - recipe[bloom_consul::install_checks]

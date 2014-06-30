@@ -1,0 +1,4 @@
+tmp/
+out/
+src/usr/
+src/etc/consul.d
