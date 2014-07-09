@@ -13,21 +13,12 @@ end
 
 bloom_consul_service "webserver" do
     id "websvr01"
-    checks [ 
-        {
-            script: "true",
-            interval: "5s"
-        }, 
-        { 
-            ttl: "10s"
-        }
-    ]
+    port 80
+    check( :script=> "true", :interval=> "5s" )
 end
 
 bloom_consul_service "webserver2" do
     # we won't set ID here and we'll test name is used properly
-    checks [ 
-        { ttl: "5s" }, 
-        { script: "false", interval: "10s" }
-    ]
+    port 81
+    check( :ttl=> "5s" )
 end

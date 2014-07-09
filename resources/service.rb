@@ -11,19 +11,16 @@ attribute :port, kind_of: Integer, required: true, callbacks: {
         }
     }
 
-attribute :checks, kind_of: Array, default: [], callbacks: {
-    "check must be a hash" => lambda { |checks|
-        checks.reject{ |check| check.kind_of? Hash }.count == 0
+attribute :check, kind_of: Hash, default: [], callbacks: {
+    "check must be a hash" => lambda { |check|
+        check.kind_of? Hash 
     },
-    "each check must specify either ttl or script/interval, not both" => lambda { |checks|
-        checks.reject{ |check|
-          (
-            check.has_key?(:ttl) and 
+    "each check must specify either ttl or script/interval, not both" => lambda { |check|
+          ( check.has_key?(:ttl) and 
             ( not ( check.has_key?( :script ) and check.has_key?(:interval) ) )
           ) or ( 
             check.has_key?( :script ) and check.has_key?(:interval) 
           )
-       }.count == 0
     }
 }
 
