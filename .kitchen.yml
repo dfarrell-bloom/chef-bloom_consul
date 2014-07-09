@@ -35,7 +35,7 @@ suites:
                 server: true
                 bind_addr: 10.2.3.4
                 advertise_addr: 10.2.3.5
-                client_addr: 10.2.3.6
+                client_addr: 0.0.0.0
                 data_dir: /tmp/consul/data
                 ui_dir: /tmp/web/data
                 log_level: trace

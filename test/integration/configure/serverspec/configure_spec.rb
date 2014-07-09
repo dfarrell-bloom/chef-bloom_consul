@@ -23,7 +23,7 @@ describe "Consul Configuration" do
             "ui_dir" => "/tmp/web/data",
             "bind_addr" => "10.2.3.4",
             "advertise_addr" => "10.2.3.5",
-            "client_addr" => "10.2.3.6",
+            "client_addr" => "0.0.0.0",
             "log_level" => "trace",
             "encrypt" => "m3FC302X/C/xZw92+p+oIg==",
             "leave_on_terminate" => true,
